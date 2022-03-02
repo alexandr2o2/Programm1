@@ -1,34 +1,39 @@
 # Скрипт для вычисления центроиды функции
-#!TODO: Интерполяию данных
+#!TODO: Интерполяцию данных
 #!TODO: Расширить на несколько пиков
 
 import data
 
+def maxFind(data):
+    y = [i[1] for i in data]
+    x_max = []
+    for i in range(1,len(y)-2):
+        if y[i-1] < y[i]:
+            if y[i+1] < y[i]:
+                x_max.append(i)
+    return x_max
+
+
 
 def fiveChennels(data):
-    yAll = [i[1] for i in data]
-    y_Max = yAll.index(max(yAll))
-    """ Для данных со множеством пиков
-    idexlist_max = []
-    for i in range(1,len(data)-2):
-        if data[i + 1][1] > data[i][1] > data[i - 1][1]:
-            idexlist_max.append(i)
-    """
-    centroid_x = data[y_Max][0]+(yAll[y_Max+1]*(yAll[y_Max]-yAll[y_Max-2])-yAll[y_Max-1]*(yAll[y_Max]-yAll[y_Max+2]))/\
-                 (yAll[y_Max+1]*(yAll[y_Max]-yAll[y_Max-2])+yAll[y_Max-1]*(yAll[y_Max]-yAll[y_Max+2]))
+    y = [i[1] for i in data]
+    yMs = maxFind(data)
+    centroid_x = []
+    for yM in yMs:
+        centroid = data[yM][0]+(y[yM+1]*(y[yM]-y[yM-2])-y[yM-1]*(y[yM]-y[yM+2]))/\
+                     (y[yM+1]*(y[yM]-y[yM-2])+y[yM-1]*(y[yM]-y[yM+2]))
+        centroid_x.append(centroid)
     return centroid_x
-
-
 
 def firstMoment(data):
     def sumOfProd(data):
-        xy =0;
+        xy = 0;
         for dot in data:
             xy+= dot[0]*dot[1]
         return xy
-
-
     yAll = [i[1] for i in data]
+
+    centroid_x = []
 
     centroid_x = sumOfProd(data)/sum(yAll)
     return centroid_x
