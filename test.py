@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-from data import data1
+from data import data6
 
 
 def axes(data):
@@ -23,15 +23,18 @@ def diff2(x, y):
     y_d.append(0)
     return x_d, y_d
 
+#
+# x, y = axes(data1)
+#
 
-x, y = axes(data1)
+#
+# print(len(x))
+# print(len(x1))
 
+x, y = axes(data6)
 x1, y1 = diff2(x, y)
-
-print(len(x))
-print(len(x1))
 
 fig, ax = plt.subplots()
 ax.plot(x, y)
-ax.plot(x1, [y1*200 for y1 in y1])
+ax.plot(x1, y1)
 plt.show()

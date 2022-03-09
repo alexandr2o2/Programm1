@@ -36,13 +36,10 @@ def maxFind(y):
 
 
 def fiveChennels(x,y):
-    yMs = maxFind(y)
-    centroid_x = []
-    for yM in yMs:
-        centroid = x[yM]+(y[yM+1]*(y[yM]-y[yM-2])-y[yM-1]*(y[yM]-y[yM+2]))/\
-                     (y[yM+1]*(y[yM]-y[yM-2])+y[yM-1]*(y[yM]-y[yM+2]))
-        centroid_x.append(centroid)
-    return centroid_x
+    yM = y.index(max(y))
+    centroid = x[yM]+(y[yM+1]*(y[yM]-y[yM-2])-y[yM-1]*(y[yM]-y[yM+2]))/(y[yM+1]*(y[yM]-y[yM-2])+y[yM-1]*(y[yM]-y[yM+2]))
+    return centroid
+
 
 def firstMoment(x,y):
     def sumOfProd(x,y):
@@ -50,11 +47,8 @@ def firstMoment(x,y):
         for i in range(len(x)):
             xy += x[i]*y[i]
         return xy
-
-    centroid_x = []
-
-    centroid_x = sumOfProd(x,y)/sum(y)
-    return centroid_x
+    centroid = sumOfProd(x,y)/sum(y)
+    return centroid
 
 def findCentroids(x,y):
     x1, y1 = diff2(x, y)
@@ -72,6 +66,7 @@ def findCentroids(x,y):
         l.append(i[-1])
         return l
     l = edgePoints(x1,y1)
+    print(l)
 
     centroidsByFive = []
     centroidsByFirst = []
@@ -79,8 +74,19 @@ def findCentroids(x,y):
     for i in range(0,len(l),2):
         a = l[i]
         b = l[i+1]
-        x_p = [x[k] for k in range(a,b)]
-        y_p = [y[k] for k in range(a,b)]
+        print("Начальные значения a,b: "+str(a)+" "+str(b) )
+        if (a == b) and (a >= 5):
+            a = a - 2
+            b = b + 2
+        elif (abs(b-a+1) < 5) :
+            a = a - int(abs(5 - (b - a) + 1) / 2)
+            b = b + int(abs(5 - (b - a) + 1) / 2)
+        print(a,b)
+
+        x_p = [x[k] for k in range(a,b+1)]
+        y_p = [y[k] for k in range(a,b+1)]
+        print(x_p)
+        print(y_p)
         centroidsByFive.append(fiveChennels(list(x_p),list(y_p)))
         centroidsByFirst.append(firstMoment(list(x_p),list(y_p)))
 
@@ -104,11 +110,11 @@ def main():
     #     print("Метод пяти каналов")
     #     print(fiveChennels(x,y))
     #     k+=1
-    x, y = axesSplit(data.data1)
+    x, y = axesSplit(data.data6)
     x1, x2 = findCentroids(x,y)
     print("Метод пяти каналов")
     print(x1)
-    print("Метод пяти каналов")
+    print("Метод первых моментов")
     print(x2)
 
     
