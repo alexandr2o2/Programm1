@@ -75,6 +75,11 @@ def findCentroids(x,y):
         a = l[i]
         b = l[i+1]
         print("Начальные значения a,b: "+str(a)+" "+str(b) )
+
+        x_p = [x[k] for k in range(a,b+1)]
+        y_p = [y[k] for k in range(a,b+1)]
+        centroidsByFirst.append(firstMoment(list(x_p), list(y_p)))
+
         if (a == b) and (a >= 5):
             a = a - 2
             b = b + 2
@@ -88,7 +93,7 @@ def findCentroids(x,y):
         print(x_p)
         print(y_p)
         centroidsByFive.append(fiveChennels(list(x_p),list(y_p)))
-        centroidsByFirst.append(firstMoment(list(x_p),list(y_p)))
+
 
     return centroidsByFive, centroidsByFirst
 
