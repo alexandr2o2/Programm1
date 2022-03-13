@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
-
-from data import data6
+import data
 
 
 def axes(data):
@@ -31,7 +30,7 @@ def diff2(x, y):
 # print(len(x))
 # print(len(x1))
 
-x, y = axes(data6)
+x, y = axes(data.data8)
 x1, y1 = diff2(x, y)
 
 fig, ax = plt.subplots()

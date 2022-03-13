@@ -2,6 +2,7 @@
 #!TODO: Интерполяцию данных
 #!TODO: Дебаг метода пяти каналов при поиске многих цендроид
 #!TODO: Убрать ненкжные списки из 2 методов для поиска центроид
+#!TODO: Создать отдельную библиотеку для кода
 
 import data
 
@@ -36,7 +37,8 @@ def maxFind(y):
 
 
 def fiveChennels(x,y):
-    yM = y.index(max(y))
+    #yM = y.index(max(y))
+    yM = 2
     centroid = x[yM]+(y[yM+1]*(y[yM]-y[yM-2])-y[yM-1]*(y[yM]-y[yM+2]))/(y[yM+1]*(y[yM]-y[yM-2])+y[yM-1]*(y[yM]-y[yM+2]))
     return centroid
 
@@ -66,6 +68,10 @@ def findCentroids(x,y):
         l.append(i[-1])
         return l
     l = edgePoints(x1,y1)
+
+    # l.remove(1)
+    # l.remove(1)
+    print(l)
     print(l)
 
     centroidsByFive = []
@@ -115,7 +121,7 @@ def main():
     #     print("Метод пяти каналов")
     #     print(fiveChennels(x,y))
     #     k+=1
-    x, y = axesSplit(data.data6)
+    x, y = axesSplit(data.data8)
     x1, x2 = findCentroids(x,y)
     print("Метод пяти каналов")
     print(x1)
