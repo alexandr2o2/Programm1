@@ -30,10 +30,11 @@ def diff2(x, y):
 # print(len(x))
 # print(len(x1))
 
-x, y = axes(data.data8)
+x, y = axes(data.data9)
 x1, y1 = diff2(x, y)
+#y1 = [i < 0 for i in y1]
 
 fig, ax = plt.subplots()
-ax.plot(x, y)
+#ax.plot(x, y)
 ax.plot(x1, y1)
 plt.show()

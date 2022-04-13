@@ -55,23 +55,20 @@ def firstMoment(x,y):
 def findCentroids(x,y):
     x1, y1 = diff2(x, y)
     def edgePoints (x,y):
-        i = []
-        for val in y1:
-            if val < 0:
-                i.append(y1.index(val))
+        ind = []
+        for i in range(len(y1)):
+            if y1[i] < 0:
+                ind.append(i)
+        print(ind)
         l = []
-        l.append(i[0])
-        for j in range(0, len(i)-1):
-            if i[j+1] != i[j]+1:
-                l.append(i[j])
-                l.append(i[j+1])
-        l.append(i[-1])
+        l.append(ind[0])
+        for j in range(0, len(ind)-1):
+            if ind[j+1] != ind[j]+1:
+                l.append(ind[j])
+                l.append(ind[j+1])
+        l.append(ind[-1])
         return l
     l = edgePoints(x1,y1)
-
-    # l.remove(1)
-    # l.remove(1)
-    print(l)
     print(l)
 
     centroidsByFive = []
@@ -121,7 +118,7 @@ def main():
     #     print("Метод пяти каналов")
     #     print(fiveChennels(x,y))
     #     k+=1
-    x, y = axesSplit(data.data8)
+    x, y = axesSplit(data.data9)
     x1, x2 = findCentroids(x,y)
     print("Метод пяти каналов")
     print(x1)
