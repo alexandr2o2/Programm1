@@ -1,8 +1,9 @@
+import inspect
 import random
 
 import numpy as np
 import matplotlib.pyplot as plt
-import Error
+from scipy.optimize import curve_fit
 
 
 def lineAppr(x: list, y: list):
@@ -43,8 +44,19 @@ def gauss4(x, h1, c1, d1, h2, c2, d2, h3, c3, d3, h4, c4, d4):
     return gauss2(x, h1, c1, d1, h2, c2, d2) + gauss2(x, h3, c3, d3, h4, c4, d4)
 
 
-def nonLineAppr(x: list, y: list):
-    pass
+def derivative(f, x0):
+    ''''''
+    # !TODO: Перевести ли функции в классы?
+    if not inspect.isfunction(f):
+        raise ValueError
+    h = 1e-5
+    # inspect.
+    return (f(x0 + h) - f(x0 - h)) / (2 * h)
+
+
+def nonLinerSqAppr(f, x: list, y: list, ip0: list):
+    p, _ = curve_fit(f, x, y, p0=ip0, bounds=(0, [1., 3., 10., 1., 3., 10.]))
+    return p
 
 
 def smooth1(x: list, y: list):
@@ -59,17 +71,41 @@ def smooth1(x: list, y: list):
 
 
 def main():
-    h = 10 / np.sqrt(2 * np.pi)
-    d = 100
-    c = 2500
-    x_dots = list(range(0, 4016, 1))
-    y_dots = [h * np.exp(-(np.square((x - c) / d)) / 2) for x in x_dots]
+    h1 = 0.04 / np.sqrt(2 * np.pi)
+    d1 = 0.2
+    c1 = 1
+    h2 = 0.03 / np.sqrt(2 * np.pi)
+    d2 = 0.2
+    c2 = 1.5
+    x_dots = [x*0.01 for x in range(300)]
+    y_dots = []
+    for x in x_dots:
+        y_dots.append(gauss2(x, h1, c1, d1, h2, c2, d2) + random.random()*0.0005)
 
-    x_f, y_f = smooth1(x_dots, y_dots)
+    # [h1, c1, d1, h2, c2, d2]
+    ip0 = [.01, .1, 1, .01, .01, 1.5]
+    print(x_dots)
+    print(y_dots)
+    par = nonLinerSqAppr(gauss2, x_dots, y_dots, ip0)
+    print(par)
+    x_f = x_dots
+    y_f = []
+    for x in x_dots:
+        y_f.append(gauss2(x, *par))
+    # x_f, y_f = smooth1(x_dots, y_dots)
+    y1 = []
+    y2 = []
+    for x in x_dots:
+        y1.append(gauss1(x, *par[0:3]))
+
+    for x in x_dots:
+        y2.append(gauss1(x, *par[3:6]))
 
     fig, ax = plt.subplots()
     ax.plot(x_dots, y_dots)
     ax.plot(x_f, y_f)
+    ax.plot(x_dots, y1)
+    ax.plot(x_dots, y2)
     plt.show()
 
 
