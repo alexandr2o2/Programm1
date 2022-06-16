@@ -84,8 +84,8 @@ def main():
 
     # [h1, c1, d1, h2, c2, d2]
     ip0 = [.01, .1, 1, .01, .01, 1.5]
-    print(x_dots)
-    print(y_dots)
+    #print(x_dots)
+    #print(y_dots)
     par = nonLinerSqAppr(gauss2, x_dots, y_dots, ip0)
     print(par)
     x_f = x_dots

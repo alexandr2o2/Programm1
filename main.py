@@ -5,6 +5,30 @@
 #!TODO: Создать отдельную библиотеку для кода
 
 import data
+from scipy import signal
+import math
+
+
+def join(x:list, y:list):
+    l = []
+    for i in range(len(x)):
+        l.append((x[i],y[i]))
+    return tuple(l)
+
+def savitzky_Golay_filter(data):
+    """Фильтр Савицкого-Голея"""
+    x,y = axesSplit(data)
+    filted_y = signal.savgol_filter(y,80,2)
+    return x, filted_y
+
+
+def hight_filter(data):
+    """Фильтр высоких частот"""
+    b, a = signal.butter(8,0.1,'lowpass')
+    x,y = axesSplit(data)
+    filted_y = signal.filtfilt(b,a,y)
+    return x, filted_y
+
 
 def axesSplit(data):
     y = [i[1] for i in data]
@@ -52,14 +76,14 @@ def firstMoment(x,y):
     centroid = sumOfProd(x,y)/sum(y)
     return centroid
 
-def findCentroids(x,y):
+def findCentroids(x,y,a):
     x1, y1 = diff2(x, y)
     def edgePoints (x,y):
         ind = []
         for i in range(len(y1)):
-            if y1[i] < 0:
+            if (y1[i] < 0 and math.fabs(y1[i]) > a*max(y1)):
                 ind.append(i)
-        print(ind)
+        #print(ind)
         l = []
         l.append(ind[0])
         for j in range(0, len(ind)-1):
@@ -69,7 +93,7 @@ def findCentroids(x,y):
         l.append(ind[-1])
         return l
     l = edgePoints(x1,y1)
-    print(l)
+    #print(l)
 
     centroidsByFive = []
     centroidsByFirst = []
@@ -77,7 +101,7 @@ def findCentroids(x,y):
     for i in range(0,len(l),2):
         a = l[i]
         b = l[i+1]
-        print("Начальные значения a,b: "+str(a)+" "+str(b) )
+        #print("Начальные значения a,b: "+str(a)+" "+str(b) )
 
         x_p = [x[k] for k in range(a,b+1)]
         y_p = [y[k] for k in range(a,b+1)]
@@ -89,12 +113,12 @@ def findCentroids(x,y):
         elif (abs(b-a+1) < 5) :
             a = a - int(abs(5 - (b - a) + 1) / 2)
             b = b + int(abs(5 - (b - a) + 1) / 2)
-        print(a,b)
+       #print(a,b)
 
         x_p = [x[k] for k in range(a,b+1)]
         y_p = [y[k] for k in range(a,b+1)]
-        print(x_p)
-        print(y_p)
+        #print(x_p)
+        #print(y_p)
         centroidsByFive.append(fiveChennels(list(x_p),list(y_p)))
 
 

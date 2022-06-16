@@ -9,24 +9,27 @@ class Data:
         self.x, self.y = self.dataToTwoList()
         Data.dataValueSameLength(self)
 
-
+    @staticmethod
     def dataValidType(self, data):
         if not isinstance(data, (list, tuple)):
             raise ValueError("Wrong data input type")
 
+    @staticmethod
     def dataValidDem(self, data):
         try:
             data[0][0]
         except TypeError:
             raise ValueError("Wrong data input array dimension")
 
+    @staticmethod
     def dataValidSign(self, data):
         for l1 in data:
             for l2 in l1:
                 if l2 < 0:
                     raise ValueError("Invalid data, value less than 0")
 
-    def dataValueSameLength(self, data):
+
+    def dataValueSameLength(self):
         if len(self.x) != len(self.y):
             raise ValueError("Invalid data point with no value")
 
