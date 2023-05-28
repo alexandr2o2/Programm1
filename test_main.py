@@ -1,6 +1,6 @@
 from unittest import TestCase
 import numpy as np
-import main
+import main_0
 
 
 class Test(TestCase):

@@ -1,0 +1,1 @@
+from peakSearching.searchingMethods import fiveChennel as fiveChennels

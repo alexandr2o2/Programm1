@@ -1,13 +1,14 @@
 class Data:
-    """A class with information about the data. Contains write, check, transform, write methods"""
+    """A class with information about the data. Contains write, check, transform methods"""
 
     def __init__(self, data):
         Data.dataValidType(self, data)
+        Data.dataValueSameLength(self)
         Data.dataValidDem(self, data)
         Data.dataValidSign(self, data)
         self.data = data
         self.x, self.y = self.dataToTwoList()
-        Data.dataValueSameLength(self)
+
 
     @staticmethod
     def dataValidType(self, data):
@@ -27,7 +28,6 @@ class Data:
             for l2 in l1:
                 if l2 < 0:
                     raise ValueError("Invalid data, value less than 0")
-
 
     def dataValueSameLength(self):
         if len(self.x) != len(self.y):

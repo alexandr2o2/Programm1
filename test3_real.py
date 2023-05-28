@@ -1,12 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from data import data_real
-from main import axesSplit
-from main import hight_filter
-from main import join
-from main import savitzky_Golay_filter
-from main import findCentroids
-from main import *
+from main_0 import axesSplit
+from main_0 import hight_filter
+from main_0 import join
+from main_0 import savitzky_Golay_filter
+from main_0 import findCentroids
+from main_0 import *
 
 def main():
     data0 = data_real

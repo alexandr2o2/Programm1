@@ -22,6 +22,7 @@ def diff2(x, y):
     y_d.append(0)
     return x_d, y_d
 
+
 #
 # x, y = axes(data1)
 #
@@ -29,12 +30,25 @@ def diff2(x, y):
 #
 # print(len(x))
 # print(len(x1))
-
-x, y = axes(data.data9)
-x1, y1 = diff2(x, y)
-#y1 = [i < 0 for i in y1]
-
-fig, ax = plt.subplots()
-#ax.plot(x, y)
-ax.plot(x1, y1)
-plt.show()
+if __name__ == "__main__":
+    datas = [data.data1,
+             data.data2,
+             data.data3,
+             data.data4,
+             data.data5,
+             data.data6,
+             data.data7,
+             data.data8,
+             data.data9,
+             data.data_real,
+             ]
+    i = 1
+    for data in datas:
+        x, y = axes(data)
+        # x1, y1 = diff2(x, y)
+        # y1 = [i < 0 for i in y1]
+        fig, ax = plt.subplots()
+        ax.plot(x, y)
+        # ax.plot(x1, y1)
+        plt.savefig(f"data{i}.png", bbox_inches='tight')
+        i += 1

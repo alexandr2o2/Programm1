@@ -45,8 +45,11 @@ def gauss4(x, h1, c1, d1, h2, c2, d2, h3, c3, d3, h4, c4, d4):
 
 
 def derivative(f, x0):
-    ''''''
-    # !TODO: Перевести ли функции в классы?
+    """
+    :param f:
+    :param x0:
+    :return:
+    """
     if not inspect.isfunction(f):
         raise ValueError
     h = 1e-5
@@ -54,8 +57,8 @@ def derivative(f, x0):
     return (f(x0 + h) - f(x0 - h)) / (2 * h)
 
 
-def nonLinerSqAppr(f, x: list, y: list, ip0: list):
-    p, _ = curve_fit(f, x, y, p0=ip0, bounds=(0, [1., 3., 10., 1., 3., 10.]))
+def nonLinerSqAppr(f, x: list, y: list, ip0: list, bounds=(-np.inf, np.inf)):
+    p, _ = curve_fit(f, x, y, p0=ip0, bounds=bounds)
     return p
 
 
